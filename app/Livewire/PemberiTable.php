@@ -15,6 +15,10 @@ class PemberiTable extends Component
     public $isEditMode = false;
     public $editId;
 
+    public $showDeleteConfirmationModal = false;
+    public $deleteId;
+    public $deleteName;
+
     public $nama = '';
 
 
@@ -51,6 +55,23 @@ class PemberiTable extends Component
         $this->isEditMode = false;
     }
 
+    public function handleOpenConfirmationModal($id)
+    {
+        $data = PemberiZakat::find($id);
+        $this->deleteId = $id;
+        $this->deleteName = $data->nama;
+
+        $this->showDeleteConfirmationModal = true;
+    }
+
+    public function handleCloseConfirmationModal()
+    {
+        $this->deleteId = '';
+        $this->deleteName = '';
+
+        $this->showDeleteConfirmationModal = false;
+    }
+
     public function save()
     {
         $this->validate([
@@ -75,6 +96,17 @@ class PemberiTable extends Component
         $this->isEditMode = false;
 
         Toaster::success($message);
+    }
+
+    public function handleDelete()
+    {
+        $data = PemberiZakat::find($this->deleteId);
+        $data->delete();
+
+        $this->reset(['deleteId', 'deleteName']);
+        $this->showDeleteConfirmationModal = false;
+
+        Toaster::success('Data berhasil dihapus');
     }
 
     public function render()

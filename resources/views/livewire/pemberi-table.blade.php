@@ -73,11 +73,16 @@
                         <td class="px-6 py-4">
                             {{ $item->nama }}
                         </td>
-                        <td class="px-6 py-4 flex justify-center">
+                        <td class="px-6 py-4 flex justify-center space-x-2">
                             <button wire:click='handleEdit({{ $item->id }})'
                                 class="px-4 py-2 bg-blue-500 hover:bg-blue-600 text-gray-50 text-sm rounded-md shadow-md cursor-pointer">
                                 <i class="fas fa-pencil text-sm"></i>
                                 Edit
+                            </button>
+                            <button wire:click='handleOpenConfirmationModal({{ $item->id }})'
+                                class="px-4 py-2 bg-rose-500 hover:bg-rose-600 text-gray-50 text-sm rounded-md shadow-md cursor-pointer">
+                                <i class="fas fa-trash text-sm"></i>
+                                Hapus
                             </button>
                         </td>
                     </tr>
@@ -158,4 +163,50 @@
         </div>
     </div> --}}
     {{-- end modal --}}
+
+    {{-- modal delete confirmation --}}
+    <div x-show="$wire.showDeleteConfirmationModal" class="relative z-50" aria-labelledby="modal-title" role="dialog"
+        aria-modal="true">
+        <div class="fixed inset-0 bg-black/75 transition-opacity" aria-hidden="true"></div>
+
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <div
+                    class="relative transform overflow-hidden rounded-lg bg-white dark:bg-bg-dark-primary text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div class="bg-white dark:bg-bg-dark-primary px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div
+                                class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
+                                <svg class="size-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                    stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
+                                <h3 class="text-base font-semibold text-main-text dark:text-dark-main-text"
+                                    id="modal-title">Hapus Data
+                                </h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500 dark:text-gray-300">Apakah anda yakin akan
+                                        menghapus data pemberi zakat atas nama <span
+                                            class="font-medium">{{ $deleteName }}</span>?
+                                    </p>
+                                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Data akan di hapus secara
+                                        permanen. Tindakan ini tidak dapat di batalkan.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                        <button wire:click='handleDelete' type="button"
+                            class="inline-flex w-full justify-center rounded-md bg-red-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto cursor-pointer">Delete</button>
+                        <button type="button" wire:click='handleCloseConfirmationModal'
+                            class="py-2 px-5 text-sm font-medium text-gray-900 dark:text-gray-50 border border-gray-500 hover:bg-gray-500 hover:text-gray-50 rounded-md transition duration-300 cursor-pointer">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- end modal delete confirmation --}}
 </div>
