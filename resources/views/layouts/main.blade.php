@@ -13,7 +13,7 @@
     <link rel="icon" href="{{ asset('img/Logo.png') }}">
 
     <!-- Include Tailwind CSS -->
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     {{-- google font --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,6 +55,7 @@
 
     @livewireScripts
 
+    <x-toaster-hub />
     @stack('script')
 </body>
 
