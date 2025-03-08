@@ -16,8 +16,9 @@
     @vite('resources/css/app.css')
 
     {{-- google font --}}
-    <link
-        href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Eczar:wght@400..800&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap"
         rel="stylesheet">
 
     {{-- icon --}}
@@ -31,75 +32,19 @@
 </head>
 
 <body>
-    <div class="flex" x-data="{ open: true }">
+    <div class="flex bg-gray-50" x-data="{ open: true }">
         <!-- Toggle Button -->
         <button x-cloak x-show="!open" @click="open = true"
-            class="fixed top-4 left-4 z-40 px-4 py-2.5 text-white bg-emerald-600 rounded-lg shadow-lg hover:bg-emerald-700 focus:outline-none transition-all duration-300 ease-in-out">
-            <i class="fas fa-bars"></i>
+            class="fixed top-4 left-4 z-40 px-4 py-2 text-gray-900 hover:text-gray-50 border border-emerald-500 hover:bg-emerald-500 rounded-lg shadow-lg focus:outline-none transition-all duration-300 ease-in-out cursor-pointer">
+            <i class="fas fa-bars text-sm"></i>
         </button>
 
         <!-- Sidebar -->
-        <div class="fixed inset-y-0 left-0 z-30 w-80 transition-transform duration-300 ease-in-out transform bg-gradient-to-b from-emerald-800 to-emerald-600 text-white"
-            :class="{ 'translate-x-0': open, '-translate-x-full': !open }">
-
-            <!-- Logo Section -->
-            <div class="flex items-center justify-between p-4">
-                <div class="flex items-center space-x-3">
-                    <img src="{{ asset('img/Logo.png') }}" class="w-10 h-10" alt="Logo">
-                    <span class="text-xl font-semibold">Si-Masjid</span>
-                </div>
-                <button @click="open = !open" class="px-4 py-2.5 rounded-lg hover:bg-emerald-700 focus:outline-none">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-            </div>
-
-            <!-- Navigation Links -->
-            <nav class="px-4 py-6 space-y-2">
-                <a href="#"
-                    class="flex items-center px-4 py-3 space-x-3 transition-colors rounded-lg hover:bg-emerald-700 group">
-                    <i class="fas fa-home text-lg group-hover:scale-110 transition-transform"></i>
-                    <span>Dashboard</span>
-                </a>
-
-                <a href="#"
-                    class="flex items-center px-4 py-3 space-x-3 transition-colors rounded-lg hover:bg-emerald-700 group">
-                    <i class="fas fa-mosque text-lg group-hover:scale-110 transition-transform"></i>
-                    <span>Jadwal Sholat</span>
-                </a>
-
-                <a href="#"
-                    class="flex items-center px-4 py-3 space-x-3 transition-colors rounded-lg hover:bg-emerald-700 group">
-                    <i class="fas fa-hand-holding-dollar text-lg group-hover:scale-110 transition-transform"></i>
-                    <span>Zakat</span>
-                </a>
-
-                <a href="#"
-                    class="flex items-center px-4 py-3 space-x-3 transition-colors rounded-lg hover:bg-emerald-700 group">
-                    <i class="fas fa-calendar-alt text-lg group-hover:scale-110 transition-transform"></i>
-                    <span>Kegiatan</span>
-                </a>
-
-                <a href="#"
-                    class="flex items-center px-4 py-3 space-x-3 transition-colors rounded-lg hover:bg-emerald-700 group">
-                    <i class="fas fa-users text-lg group-hover:scale-110 transition-transform"></i>
-                    <span>Jamaah</span>
-                </a>
-            </nav>
-
-            <!-- User Profile Section -->
-            <div class="absolute bottom-0 w-full p-4">
-                <div class="flex items-center p-3 space-x-3 transition-colors rounded-lg hover:bg-emerald-700">
-                    <img src="https://ui-avatars.com/api/?name=Admin" class="w-10 h-10 rounded-full">
-                    <div>
-                        <p class="font-medium">Admin Masjid</p>
-                        <p class="text-sm opacity-80">admin@simasjid.com</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('layouts.sidebar')
 
         <!-- Main Content -->
-        <div class="flex-1 ml-64">
+        <div class="flex-1 px-8 py-6 w-full h-screen bg-gray-50 transition-all duration-300"
+            :class="{ 'ml-80': open, 'ml-16': !open }">
             <!-- Your main content here -->
             @yield('content')
         </div>
