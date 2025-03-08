@@ -36,13 +36,13 @@
             </button>
 
             <div x-show="isOpen" x-transition class="pl-4 space-y-1 mt-1">
-                <a href="{{ route('pemberi.index') }}"
+                <a href="{{ route('pemberi.index') }}" wire:navigate
                     class="flex items-center px-4 py-3 space-x-3 transition-colors rounded-lg text-gray-900 hover:bg-emerald-100 border {{ request()->is('pemberi-zakat') ? 'bg-emerald-100 border border-emerald-500' : 'border-gray-50 hover:border-emerald-500' }} group cursor-pointer font-medium duration-300">
                     <i class="fas fa-address-card group-hover:scale-110 transition-transform"></i>
                     <span>Data Pemberi</span>
                 </a>
-                <a href="#"
-                    class="flex items-center px-4 py-3 space-x-3 transition-colors rounded-lg text-gray-900 hover:bg-emerald-100 border border-gray-50 hover:border-emerald-500 group cursor-pointer font-medium duration-300">
+                <a href="{{ route('penerima.index') }}" wire:navigate
+                    class="flex items-center px-4 py-3 space-x-3 transition-colors rounded-lg text-gray-900 hover:bg-emerald-100 border {{ request()->is('penerima-zakat') ? 'bg-emerald-100 border border-emerald-500' : 'border-gray-50 hover:border-emerald-500' }} group cursor-pointer font-medium duration-300">
                     <i class="fas fa-hand-holding-dollar group-hover:scale-110 transition-transform"></i>
                     <span>Data Penerima</span>
                 </a>

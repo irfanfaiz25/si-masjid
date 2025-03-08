@@ -2,14 +2,16 @@
 
 namespace App\Livewire;
 
-use App\Models\PemberiZakat;
+use App\Models\PenerimaZakat;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Masmerise\Toaster\Toaster;
 
-class PemberiTable extends Component
+class PenerimaTable extends Component
 {
     use WithPagination;
+
+    public $showModal = false;
 
     public $search = '';
     public $isEditMode = false;
@@ -20,7 +22,22 @@ class PemberiTable extends Component
     public $deleteName;
 
     public $nama = '';
+    public $alamat = '';
 
+
+    public function handleOpenModal()
+    {
+        $this->showModal = true;
+    }
+
+    public function closeModal()
+    {
+        $this->nama = '';
+        $this->alamat = '';
+        $this->editId = '';
+        $this->isEditMode = false;
+        $this->showModal = false;
+    }
 
     public function updatedSearch()
     {
@@ -31,21 +48,16 @@ class PemberiTable extends Component
     {
         $this->isEditMode = true;
         $this->editId = $id;
+        $this->showModal = true;
 
-        $data = PemberiZakat::find($id);
+        $data = PenerimaZakat::find($id);
         $this->nama = $data->nama;
-    }
-
-    public function handleCancelEdit()
-    {
-        $this->nama = '';
-        $this->editId = '';
-        $this->isEditMode = false;
+        $this->alamat = $data->alamat;
     }
 
     public function handleOpenConfirmationModal($id)
     {
-        $data = PemberiZakat::find($id);
+        $data = PenerimaZakat::find($id);
         $this->deleteId = $id;
         $this->deleteName = $data->nama;
 
@@ -63,32 +75,33 @@ class PemberiTable extends Component
     public function save()
     {
         $this->validate([
-            'nama' => 'required|string|max:100|unique:pemberi_zakats,nama,' . $this->editId,
+            'nama' => 'required|string|max:100|unique:penerima_zakats,nama,' . $this->editId,
+            'alamat' => 'required|string'
         ]);
 
         if ($this->isEditMode) {
-            $data = PemberiZakat::find($this->editId);
+            $data = PenerimaZakat::find($this->editId);
             $data->update([
                 'nama' => $this->nama,
+                'alamat' => $this->alamat,
             ]);
         } else {
-            PemberiZakat::create([
+            PenerimaZakat::create([
                 'nama' => $this->nama,
+                'alamat' => $this->alamat,
             ]);
         }
 
         $message = $this->isEditMode ? 'Data berhasil diperbarui' : 'Data berhasil ditambahkan';
 
-        $this->nama = '';
-        $this->editId = '';
-        $this->isEditMode = false;
+        $this->closeModal();
 
         Toaster::success($message);
     }
 
     public function handleDelete()
     {
-        $data = PemberiZakat::find($this->deleteId);
+        $data = PenerimaZakat::find($this->deleteId);
         $data->delete();
 
         $this->reset(['deleteId', 'deleteName']);
@@ -99,9 +112,9 @@ class PemberiTable extends Component
 
     public function render()
     {
-        $pemberi = PemberiZakat::where('nama', 'like', "%$this->search%")->latest()->paginate(10);
-        return view('livewire.pemberi-table', [
-            'pemberi' => $pemberi,
+        $penerima = PenerimaZakat::where('nama', 'like', "%$this->search%")->latest()->paginate(10);
+        return view('livewire.penerima-table', [
+            'penerima' => $penerima,
         ]);
     }
 }

@@ -2,10 +2,10 @@
 
 @section('content')
     <h2 class="text-3xl font-bold">
-        Data Pemberi Zakat
+        Data Penerima Zakat
     </h2>
 
     <div class="mt-7 w-full">
-        @livewire('pemberi-table')
+        @livewire('penerima-table')
     </div>
 @endsection

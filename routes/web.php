@@ -9,3 +9,7 @@ Route::get('/', function () {
 Route::get('/pemberi-zakat', function () {
     return view('contents.pemberi');
 })->name('pemberi.index');
+
+Route::get('/penerima-zakat', function () {
+    return view('contents.penerima');
+})->name('penerima.index');
