@@ -28,25 +28,27 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
 
+    <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+
     @livewireStyles
 </head>
 
-<body>
-    <div class="flex bg-gray-50" x-data="{ open: true }">
-        <!-- Toggle Button -->
-        <button x-cloak x-show="!open" @click="open = true"
-            class="fixed top-4 left-4 z-40 px-4 py-2 text-gray-900 hover:text-gray-50 border border-emerald-500 hover:bg-emerald-500 rounded-lg shadow-lg focus:outline-none transition-all duration-300 ease-in-out cursor-pointer">
-            <i class="fas fa-bars text-sm"></i>
-        </button>
+<body class="bg-[#FAFAFA] dark:bg-[#1c1c1c] font-sans">
 
-        <!-- Sidebar -->
-        @include('layouts.sidebar')
+    {{-- @livewire('header-layout') --}}
 
-        <!-- Main Content -->
-        <div class="flex-1 px-8 py-6 w-full h-screen bg-gray-50 transition-all duration-300"
-            :class="{ 'ml-80': open, 'ml-16': !open }">
-            <!-- Your main content here -->
-            @yield('content')
+    <div class="relative">
+        <div class="flex gap-6 pt-10">
+
+            @livewire('sidebar-toggle')
+
+            <div
+                class="flex-1 p-4 text-xl bg-[#FAFAFA] dark:bg-[#1c1c1c] text-gray-900 dark:text-gray-50 font-semibold overflow-auto relative min-h-screen duration-500 -ml-5 lg:ml-64">
+
+                @yield('content')
+
+            </div>
         </div>
     </div>
 
@@ -56,7 +58,7 @@
     @livewireScripts
 
     <x-toaster-hub />
-    @stack('script')
+    @stack('scripts')
 </body>
 
 </html>
