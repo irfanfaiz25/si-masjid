@@ -10,11 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('pemberi_zakats', function (Blueprint $table) {
+        Schema::create('riwayat_pemberian_zakats', function (Blueprint $table) {
             $table->id();
-            $table->string('nama', 100)->unique();
-            $table->text('alamat');
+            $table->unsignedBigInteger('pemberi_zakat_id');
+            $table->decimal('jumlah', 10, 2);
+            $table->year('tahun');
             $table->timestamps();
+
+            $table->foreign('pemberi_zakat_id')->references('id')->on('pemberi_zakats')->onDelete('cascade');
         });
     }
 
@@ -23,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('pemberi_zakats');
+        Schema::dropIfExists('riwayat_pemberian_zakats');
     }
 };

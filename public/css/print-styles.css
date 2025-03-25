@@ -1,0 +1,63 @@
+/* public/css/print-styles.css */
+@page {
+    size: 60mm 40mm;
+    margin: 0;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.label-container {
+    width: 60mm;
+    height: 40mm;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    padding: 2mm;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.label-content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.qr-code-container {
+    width: 37%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 2mm;
+}
+
+.qr-code {
+    max-width: 100%;
+    max-height: 32mm; /* Leave some margin */
+    width: auto;
+    height: auto;
+}
+
+.text-container {
+    width: 63%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 1mm;
+}
+
+.address-text {
+    font-size: 7pt;
+    line-height: 1.2;
+    color: #333;
+    margin-bottom: 1mm;
+}
+
+.name-text {
+    font-size: 9pt;
+    line-height: 1.2;
+    font-weight: bold;
+}

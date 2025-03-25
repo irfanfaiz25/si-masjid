@@ -10,4 +10,10 @@ class PenerimaZakat extends Model
         'nama',
         'alamat'
     ];
+
+
+    public function penerimaan()
+    {
+        return $this->hasMany(RiwayatPenerimaanZakat::class);
+    }
 }

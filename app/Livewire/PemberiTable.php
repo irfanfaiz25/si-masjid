@@ -12,6 +12,7 @@ class PemberiTable extends Component
     use WithPagination;
 
     public $search = '';
+    public $showModal = false;
     public $isEditMode = false;
     public $editId;
 
@@ -20,7 +21,22 @@ class PemberiTable extends Component
     public $deleteName;
 
     public $nama = '';
+    public $alamat = '';
 
+
+    public function handleOpenModal()
+    {
+        $this->showModal = true;
+    }
+
+    public function closeModal()
+    {
+        $this->nama = '';
+        $this->alamat = '';
+        $this->editId = '';
+        $this->isEditMode = false;
+        $this->showModal = false;
+    }
 
     public function updatedSearch()
     {
@@ -31,16 +47,11 @@ class PemberiTable extends Component
     {
         $this->isEditMode = true;
         $this->editId = $id;
+        $this->showModal = true;
 
         $data = PemberiZakat::find($id);
         $this->nama = $data->nama;
-    }
-
-    public function handleCancelEdit()
-    {
-        $this->nama = '';
-        $this->editId = '';
-        $this->isEditMode = false;
+        $this->alamat = $data->alamat;
     }
 
     public function handleOpenConfirmationModal($id)
@@ -70,18 +81,18 @@ class PemberiTable extends Component
             $data = PemberiZakat::find($this->editId);
             $data->update([
                 'nama' => $this->nama,
+                'alamat' => $this->alamat,
             ]);
         } else {
             PemberiZakat::create([
                 'nama' => $this->nama,
+                'alamat' => $this->alamat,
             ]);
         }
 
         $message = $this->isEditMode ? 'Data berhasil diperbarui' : 'Data berhasil ditambahkan';
 
-        $this->nama = '';
-        $this->editId = '';
-        $this->isEditMode = false;
+        $this->closeModal();
 
         Toaster::success($message);
     }

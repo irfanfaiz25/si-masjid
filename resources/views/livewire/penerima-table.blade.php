@@ -52,10 +52,10 @@
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
                             {{ ($penerima->currentPage() - 1) * $penerima->perPage() + $loop->iteration }}
                         </th>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 capitalize">
                             {{ $item->nama }}
                         </td>
-                        <td class="px-6 py-4">
+                        <td class="px-6 py-4 uppercase">
                             {{ $item->alamat }}
                         </td>
                         <td class="px-6 py-4 flex justify-center space-x-2">
@@ -121,11 +121,11 @@
                         </div>
                         <div class="w-full mb-2">
                             <label for="alamat" class="text-sm text-gray-900 font-semibold">
-                                Alamat
+                                Alamat/RT
                             </label>
-                            <textarea id="alamat" wire:model='alamat'
+                            <input id="alamat" wire:model='alamat' type="text"
                                 class="w-full mt-1 bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-28 py-2.5 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"
-                                placeholder="Masukkan alamat penerima" rows="3"></textarea>
+                                placeholder="Masukkan alamat penerima zakat" />
                             @error('alamat')
                                 <p class="mt-1 text-xs text-red-500">
                                     {{ $message }}

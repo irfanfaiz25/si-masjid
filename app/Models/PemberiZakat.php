@@ -8,5 +8,12 @@ class PemberiZakat extends Model
 {
     protected $fillable = [
         'nama',
+        'alamat',
     ];
+
+
+    public function pemberian()
+    {
+        return $this->hasMany(RiwayatPemberianZakat::class);
+    }
 }

@@ -1,0 +1,24 @@
+/* This file is specifically for the POS80 printer */
+@media print {
+    @page {
+        size: 60mm 40mm;
+        margin: 0;
+    }
+
+    body {
+        width: 60mm;
+        height: 40mm;
+        margin: 0;
+        padding: 0;
+    }
+
+    .label-container {
+        break-after: page;
+        break-inside: avoid;
+        width: 60mm;
+        height: 40mm;
+        margin: 0;
+        padding: 2mm;
+        box-sizing: border-box;
+    }
+}
