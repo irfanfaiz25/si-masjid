@@ -40,7 +40,7 @@ class PemberiDashboard extends Component
     {
         $this->searchPemberi = '';
         $this->jumlah = 3.5;
-        $this->tahun = date('Y'); // Set back to current year instead of empty
+        $this->tahun = date('Y');
         $this->selectedPemberi = null;
         $this->isEditMode = false;
         $this->editId = null;
@@ -124,10 +124,11 @@ class PemberiDashboard extends Component
 
     public function delete()
     {
-        $data = RiwayatPemberianZakat::find($this->deleteId);
+        $data = RiwayatPemberianZakat::find($this->deleteData['id']);
         $data->delete();
 
         Toaster::success('Data berhasil dihapus');
+        $this->handleCloseConfirmationModal();
     }
 
     public function render()

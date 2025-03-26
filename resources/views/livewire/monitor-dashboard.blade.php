@@ -125,7 +125,7 @@
                             {{ $item->penerima->alamat }}
                         </td>
                         <td class="px-6 py-4 text-center">
-                            @formatJumlah($item->jumlah)
+                            @formatJumlah($item->jumlah) liter
                         </td>
                         <td class="px-6 py-4 flex justify-center space-x-2">
                             @if ($item->status === 'done')

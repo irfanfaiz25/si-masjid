@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class DashboardTabs extends Component
 {
-    public $currentTab = 'monitoring';
+    public $currentTab = 'pendaftar';
 
 
     public function handleChangeTabs($tab)

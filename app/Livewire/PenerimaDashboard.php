@@ -125,10 +125,11 @@ class PenerimaDashboard extends Component
 
     public function delete()
     {
-        $data = RiwayatPenerimaanZakat::find($this->deleteId);
+        $data = RiwayatPenerimaanZakat::find($this->deleteData['id']);
         $data->delete();
 
         Toaster::success('Data berhasil dihapus');
+        $this->handleCloseConfirmationModal();
     }
 
     public function render()
