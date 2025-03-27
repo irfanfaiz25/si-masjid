@@ -8,6 +8,7 @@ class RiwayatPenerimaanZakat extends Model
 {
     public $fillable = [
         'penerima_zakat_id',
+        'kode',
         'jumlah',
         'tahun',
         'status',

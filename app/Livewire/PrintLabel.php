@@ -27,7 +27,6 @@ class PrintLabel extends Component
     public function preparePrint()
     {
         $this->generateQrCode('Ahmad Muzakki');
-        // $this->generateBarcode('Ahmad Muzakki');
         $this->dispatch('print-label');
     }
 

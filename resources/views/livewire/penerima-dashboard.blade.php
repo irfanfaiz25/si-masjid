@@ -21,7 +21,16 @@
                 </button>
             </div>
         </div>
-        <div class="w-1/2 flex justify-end items-center">
+        <div class="w-1/2 flex justify-end items-center space-x-2">
+            @if (count($selectedData) > 0)
+                <div class="px-4 py-2 bg-blue-100 text-blue-800 rounded-md">
+                    {{ count($selectedData) }} item terpilih
+                </div>
+                <button type="button" wire:click='handleBulkAction'
+                    class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 border border-blue-700 rounded-md text-sm text-gray-50 font-medium cursor-pointer transition-all duration-300">
+                    Proses Terpilih
+                </button>
+            @endif
             <button type="button" wire:click='handleOpenModal'
                 class="px-6 py-2.5 bg-emerald-700 hover:bg-emerald-800 border border-emerald-800 rounded-md text-sm text-gray-50 font-medium cursor-pointer transition-all duration-300">
                 Tambah
@@ -33,6 +42,11 @@
         <table class="w-full text-sm text-left text-gray-800 dark:text-gray-50">
             <thead class="text-sm text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
+                    <th scope="col" class="px-4 py-4 w-10 text-center">
+                        <input type="checkbox" wire:model.live="selectAll"
+                            @if ($allSelected) checked @endif
+                            class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50">
+                    </th>
                     <th scope="col" class="px-6 py-4 w-24 text-center">
                         No
                     </th>
@@ -54,6 +68,10 @@
                 @foreach ($zakat as $item)
                     <tr
                         class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-100 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
+                        <td class="px-4 py-4 text-center">
+                            <input type="checkbox" wire:model.live="selectedData" value="{{ $item->id }}"
+                                class="rounded border-gray-300 text-emerald-600 shadow-sm focus:border-emerald-300 focus:ring focus:ring-emerald-200 focus:ring-opacity-50">
+                        </td>
                         <th scope="row"
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
                             {{ ($zakat->currentPage() - 1) * $zakat->perPage() + $loop->iteration }}

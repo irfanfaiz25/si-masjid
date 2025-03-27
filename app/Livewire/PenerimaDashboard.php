@@ -21,6 +21,8 @@ class PenerimaDashboard extends Component
     public $jumlah = 3.5;
     public $tahun;
     public $search;
+    public $selectedData = []; // Add this property to store selected rows
+    public $allSelected;
 
     public $showDeleteConfirmationModal = false;
     public $deleteData;
@@ -87,6 +89,41 @@ class PenerimaDashboard extends Component
         $this->selectedPenerima = null;
     }
 
+    // Add these methods to handle select all functionality
+
+    public $selectAll = false;
+
+    public function updatedSelectAll($value)
+    {
+        if ($value) {
+            // Get all IDs from the current page
+            $this->selectedData = $this->zakat->pluck('id')->map(fn($id) => (string) $id)->toArray();
+        } else {
+            $this->selectedData = [];
+        }
+    }
+
+    public function updatedSelectedData()
+    {
+        // Update selectAll property based on whether all items are selected
+        $this->selectAll = count($this->selectedData) === $this->zakat->count();
+    }
+
+    public function render()
+    {
+        $penerima = PenerimaZakat::where('nama', 'like', "%$this->searchPenerima%")->get()->toArray();
+        $penerimaanZakat = RiwayatPenerimaanZakat::with('penerima')->where('tahun', date('Y'))->whereHas('penerima', function ($query) {
+            $query->where('nama', 'like', "%$this->search%");
+        })->latest()->paginate(20);
+
+        $this->zakat = $penerimaanZakat; // Store in a property for use in other methods
+
+        return view('livewire.penerima-dashboard', [
+            'penerima' => $penerima,
+            'zakat' => $penerimaanZakat,
+        ]);
+    }
+
     public function save()
     {
         $this->validate([
@@ -102,14 +139,20 @@ class PenerimaDashboard extends Component
                 'tahun' => $this->tahun,
             ]);
         } else {
+            if (!$this->selectedPenerima) {
+                Toaster::error('Anda belum memilih penerima zakat');
+                return;
+            }
+
             $penerimaan = RiwayatPenerimaanZakat::where('penerima_zakat_id', $this->selectedPenerima['id'])->where('tahun', date('Y'))->exists();
             if ($penerimaan) {
-                Toaster::error('Data pendaftar untuk tahun ini sudah ada');
+                Toaster::error('Data penerima untuk tahun ini sudah ada');
                 return;
             }
 
             RiwayatPenerimaanZakat::create([
                 'penerima_zakat_id' => $this->selectedPenerima['id'],
+                'kode' => 'ZKT' . date('YmdHis') . uniqid(),
                 'jumlah' => $this->jumlah,
                 'tahun' => $this->tahun,
                 'status' => 'on_process'
@@ -132,16 +175,19 @@ class PenerimaDashboard extends Component
         $this->handleCloseConfirmationModal();
     }
 
-    public function render()
+    public function handleBulkAction()
     {
-        $penerima = PenerimaZakat::where('nama', 'like', "%$this->searchPenerima%")->get()->toArray();
-        $penerimaanZakat = RiwayatPenerimaanZakat::with('penerima')->where('tahun', date('Y'))->whereHas('penerima', function ($query) {
-            $query->where('nama', 'like', "%$this->search%");
-        })->latest()->paginate(20);
+        // Example of what you can do with selected data
+        if (empty($this->selectedData)) {
+            Toaster::warning('Tidak ada data yang dipilih');
+            return;
+        }
 
-        return view('livewire.penerima-dashboard', [
-            'penerima' => $penerima,
-            'zakat' => $penerimaanZakat,
-        ]);
+        // Here you can process the selected data
+        // For example, change status, delete, etc.
+
+        Toaster::success(count($this->selectedData) . ' data berhasil diproses');
+        $this->selectedData = []; // Reset selection
+        $this->selectAll = false;
     }
 }

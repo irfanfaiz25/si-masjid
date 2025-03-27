@@ -102,6 +102,11 @@ class PemberiDashboard extends Component
                 'tahun' => $this->tahun,
             ]);
         } else {
+            if (!$this->selectedPemberi) {
+                Toaster::error('Anda belum memilih pendaftar zakat');
+                return;
+            }
+
             $pemberian = RiwayatPemberianZakat::where('pemberi_zakat_id', $this->selectedPemberi['id'])->where('tahun', date('Y'))->exists();
             if ($pemberian) {
                 Toaster::error('Data pendaftar untuk tahun ini sudah ada');

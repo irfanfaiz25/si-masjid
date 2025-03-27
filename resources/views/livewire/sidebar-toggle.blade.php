@@ -30,9 +30,10 @@
                         </button>
                         <div x-show="isOpen" class="pl-12 pt-1 space-y-1">
                             @foreach ($menu['dropdown'] as $submenu)
-                                <a href="{{ route($submenu['route']) }}" wire:navigate
+                                <a href="{{ route($submenu['route']) }}"
+                                    {{ $submenu['route'] !== 'scan-zakat.index' ? 'wire:navigate' : '' }}
                                     class="flex items-center text-sm h-11 gap-3.5 font-medium p-2 hover:bg-emerald-100 rounded-md group transition-all duration-300 {{ request()->is($submenu['request']) ? 'bg-emerald-100 border  border-emerald-500' : 'text-gray-800 dark:text-gray-50 hover:border border-gray-50 hover:border-emerald-500' }}">
-                                    {{-- <i class="{{ $menu['icon'] }} text-lg group-hover:scale-105"></i> --}}
+                                    <i class="{{ $submenu['icon'] }} text-lg group-hover:scale-105"></i>
                                     <h2 class="whitespace-pre duration-300 capitalize">{{ $submenu['name'] }}</h2>
                                 </a>
                             @endforeach

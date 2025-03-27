@@ -26,6 +26,12 @@ class SidebarToggle extends Component
                     'request' => 'zakat/dashboard*',
                 ],
                 [
+                    'name' => 'Scan Label Zakat',
+                    'route' => 'scan-zakat.index',
+                    'icon' => 'fa-solid fa-qrcode',
+                    'request' => 'zakat/scan*',
+                ],
+                [
                     'name' => 'Data Pemberi',
                     'route' => 'pemberi.index',
                     'icon' => 'fa-solid fa-layer-group',

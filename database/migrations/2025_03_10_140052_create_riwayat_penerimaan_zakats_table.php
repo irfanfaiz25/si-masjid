@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('riwayat_penerimaan_zakats', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('penerima_zakat_id');
+            $table->string('kode');
             $table->decimal('jumlah', 10, 2);
             $table->year('tahun');
             $table->string('status');

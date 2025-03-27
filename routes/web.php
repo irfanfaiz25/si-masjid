@@ -21,3 +21,7 @@ Route::get('/zakat/pemberi', function () {
 Route::get('/zakat/penerima', function () {
     return view('contents.penerima');
 })->name('penerima.index');
+
+Route::get('/zakat/scan', function () {
+    return view('contents.scan-zakat');
+})->name('scan-zakat.index');
